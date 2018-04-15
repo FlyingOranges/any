@@ -18,6 +18,8 @@ Route::group([], function ($router) {
 
         $router->group(['middleware' => ['auth', 'check.permission', 'language']], function ($router) {
 
+            $router->get('/flash', 'HomeController@test');
+
             $router->post('/setting/admin', 'UserController@setting')->name('admin.setting.adminer');
 
             $router->get('/', 'HomeController@index');

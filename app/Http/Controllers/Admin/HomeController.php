@@ -11,4 +11,11 @@ class HomeController extends BaseController
     {
         return view(getThemeView('home.index'));
     }
+
+    public function test()
+    {
+        flash('测试flash')->success();
+
+        return view(getThemeView('home.test'));
+    }
 }
