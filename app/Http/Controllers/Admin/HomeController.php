@@ -14,7 +14,11 @@ class HomeController extends BaseController
 
     public function test()
     {
-        flash('测试flash')->success();
+        if (1 > 2) {
+            flash('测试flash')->success();
+        } else {
+            flash('测试flash')->error();
+        }
 
         return view(getThemeView('home.test'));
     }
