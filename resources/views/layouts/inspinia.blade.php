@@ -10,6 +10,12 @@
     <link href="{{asset(getThemeAssets('animate/animate.css', true))}}" rel="stylesheet">
     @yield('css')
     <link href="{{asset(getThemeAssets('css/style.css'))}}" rel="stylesheet">
+    <style type="text/css">
+        .table th, .table td {
+            text-align: center;
+            vertical-align: middle !important;
+        }
+    </style>
 </head>
 <body class="">
 <div id="wrapper">
@@ -108,6 +114,9 @@
 @yield('js')
 
 <script>
+    // flash提示框 3秒后自动消失
+    $("[role='alert']").delay(3000).hide(0);
+
     $('#logout-a').on('click', function () {
         $('#logout-form').submit();
     });
@@ -128,11 +137,11 @@
             headers: {'x-csrf-token': $('meta[name="csrf-token"]').attr('content')},
             success: function (e) {
                 if (e.status == 200) {
-                    alert('更新成功');
+                    layer.alert('更新成功');
                     return false;
                 }
                 if (e.status == 401) {
-                    alert('更新失败');
+                    layer.alert('更新失败');
                     return false;
                 }
             }

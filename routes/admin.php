@@ -31,6 +31,9 @@ Route::group([], function ($router) {
             $router->get('menu/clear', 'MenuController@cacheClear');
             $router->resource('menu', 'MenuController');
             $router->get('setting/{lang}', 'SettingController@language');
+
+            // 视图操作分之测试s
+            $router->resource('view', 'ViewsController');
         });
 
     });

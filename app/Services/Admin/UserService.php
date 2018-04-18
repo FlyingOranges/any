@@ -165,7 +165,6 @@ Eof
             flash_info($result, trans('common.create_success'), trans('common.create_error'));
             return isset($attributes['rediret']) ? $this->createRoute : $this->indexRoute;
         } catch (Exception $e) {
-            dd($e);
             flash(trans('common.create_error'), 'danger');
             return $this->createRoute;
         }
