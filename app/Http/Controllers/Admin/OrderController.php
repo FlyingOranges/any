@@ -2,19 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Services\Admin\PermissionService;
-use App\Http\Requests\Admin\PermissionRequest;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
-class PermissionController extends BaseController
+class OrderController extends Controller
 {
-    protected $service;
-
-    public function __construct(PermissionService $service)
-    {
-        parent::__construct();
-        $this->service = $service;
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -22,9 +15,7 @@ class PermissionController extends BaseController
      */
     public function index()
     {
-        $result = $this->service->index();
-
-        return request()->ajax() ? $result : view(getThemeView('permission.list'))->with($result);
+        dd('index');
     }
 
     /**
@@ -34,7 +25,7 @@ class PermissionController extends BaseController
      */
     public function create()
     {
-        return view(getThemeView('permission.create'));
+        //
     }
 
     /**
@@ -43,10 +34,9 @@ class PermissionController extends BaseController
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PermissionRequest $request)
+    public function store(Request $request)
     {
-        $route = $this->service->store($request->all());
-        return redirect()->route($route);
+        //
     }
 
     /**
@@ -57,7 +47,8 @@ class PermissionController extends BaseController
      */
     public function show($id)
     {
-        //
+        dd(Auth::user());
+        dd('OrderController@show');
     }
 
     /**
@@ -68,8 +59,7 @@ class PermissionController extends BaseController
      */
     public function edit($id)
     {
-        $result = $this->service->edit($id);
-        return view(getThemeView('permission.edit'))->with($result);
+        //
     }
 
     /**
@@ -79,10 +69,9 @@ class PermissionController extends BaseController
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(PermissionRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        $route = $this->service->update($request->all(), $id);
-        return redirect()->route($route);
+        //
     }
 
     /**
@@ -93,7 +82,6 @@ class PermissionController extends BaseController
      */
     public function destroy($id)
     {
-        $this->service->destroy($id);
-        return redirect()->route('permission.index');
+        //
     }
 }
