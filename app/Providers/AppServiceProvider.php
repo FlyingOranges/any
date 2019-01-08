@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Services\Admin\Impl\OrderServiceImpl;
+use App\Services\Admin\OrderService;
 use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
@@ -31,6 +33,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind(OrderService::class, OrderServiceImpl::class);
     }
 }

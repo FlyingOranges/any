@@ -13,6 +13,7 @@ class MenuController extends BaseController
     {
         $this->service = $service;
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -23,6 +24,7 @@ class MenuController extends BaseController
         $menus = $this->service->getMenuList();
         return view(getThemeView('menu.list'))->with(compact('menus'));
     }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -33,10 +35,11 @@ class MenuController extends BaseController
         $result = $this->service->create();
         return view(getThemeView('menu.create'))->with($result);
     }
+
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(MenuRequest $request)
@@ -44,10 +47,11 @@ class MenuController extends BaseController
         $result = $this->service->store($request->all());
         return response()->json($result);
     }
+
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -55,10 +59,11 @@ class MenuController extends BaseController
         $result = $this->service->show($id);
         return view(getThemeView('menu.show'))->with($result);
     }
+
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -66,11 +71,12 @@ class MenuController extends BaseController
         $result = $this->service->edit($id);
         return view(getThemeView('menu.edit'))->with($result);
     }
+
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(MenuRequest $request, $id)
@@ -78,10 +84,11 @@ class MenuController extends BaseController
         $result = $this->service->update($request->all(), $id);
         return response()->json($result);
     }
+
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -89,6 +96,7 @@ class MenuController extends BaseController
         $this->service->destroy($id);
         return redirect()->route('menu.index');
     }
+
     /**
      * 清除菜单缓存
      * @author 晚黎

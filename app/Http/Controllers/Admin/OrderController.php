@@ -2,12 +2,22 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Order;
+use App\Services\Admin\OrderService;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
-class OrderController extends Controller
+class OrderController extends BaseController
 {
+    private $OrderService;
+
+    public function __construct(OrderService $orderService)
+    {
+        parent::__construct();
+
+        $this->OrderService = $orderService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +25,9 @@ class OrderController extends Controller
      */
     public function index()
     {
-        dd('index');
+        $result = $this->OrderService->index();
+
+        return view(getThemeView('order.list'), ['data' => $result, 'search' => '']);
     }
 
     /**
