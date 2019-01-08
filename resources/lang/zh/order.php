@@ -5,4 +5,10 @@ return [
     'orderList' => '账单列表',
     'slug' => '账单',
 
+    'copyright_figure' => '著作权人',
+    'serial_number' => '流水号',
+    'software_name' => '软件名称',
+    'deliveried_at' => '交件日期',
+    'work_hours' => '工作日',
+    'price' => '价格'
 ];

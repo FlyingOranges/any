@@ -12,11 +12,15 @@ class Order extends Model
     protected $table = 'order';
     protected $primaryKey = 'id';
 
-    public function getIndexLists($id)
+    protected $guarded = [];
+
+    public function getIndexLists($id, $search)
     {
         $data = $this->when($id != 1, function ($query) use ($id) {
             $query->where('user_id', $id);
-        })->paginate(2);
+        })->when($search, function ($query) use ($search) {
+            $query->where('software_name', 'like', "%{$search}%");
+        })->paginate(15);
 
         return $data;
     }

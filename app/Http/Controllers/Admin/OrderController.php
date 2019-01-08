@@ -21,13 +21,15 @@ class OrderController extends BaseController
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $result = $this->OrderService->index();
+        $search = $request->get('search', '');
+        $result = $this->OrderService->index($search);
 
-        return view(getThemeView('order.list'), ['data' => $result, 'search' => '']);
+        return view(getThemeView('order.list'), ['data' => $result, 'search' => $search]);
     }
 
     /**
@@ -37,7 +39,7 @@ class OrderController extends BaseController
      */
     public function create()
     {
-        //
+        return view(getThemeView('order.create'));
     }
 
     /**
@@ -48,7 +50,26 @@ class OrderController extends BaseController
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'copyright_figure' => 'required',
+            'software_name' => 'required',
+            'deliveried_at' => 'required',
+            'work_hours' => 'required',
+            'price' => 'required'
+        ], [
+            'copyright_figure.required' => '请填写著作人',
+            'software_name.required' => '请填写软件名称',
+            'deliveried_at.required' => '请填写交件日期',
+            'work_hours.required' => '请填写工作日',
+            'price.required' => '请填写价格参数'
+        ]);
+
+        $merge = $request->except('_token');
+
+        $this->OrderService->createOrder($merge) ?
+            flash('新增账单成功')->success() : flash("新增账单失败")->error();
+
+        return back();
     }
 
     /**

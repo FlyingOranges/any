@@ -88,6 +88,7 @@
                                                 <td>{{ $item->software_name }}</td>
                                                 <td>{{ $item->deliveried_at }}</td>
                                                 <td>{{ $item->work_hours }}</td>
+                                                <td>交件日期</td>
                                                 <td>{{ $item->price }}</td>
                                                 <td>
                                                     <a href="{{ route('order.show',['id'=>encodeId($item->id)]) }}"
