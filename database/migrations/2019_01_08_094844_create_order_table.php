@@ -20,6 +20,7 @@ class CreateOrderTable extends Migration
             $table->string('serial_number', 20)->nullable()->comment('流水号');
             $table->string('software_name', 255)->nullable()->comment('软件名称');
             $table->timestamp('deliveried_at')->comment('交件日期');
+            $table->timestamp('out_at')->nullable()->comment('出证件日期');
             $table->integer('work_hours')->nullable()->comment('工作日');
 
             $table->decimal('price', 6, 2)->comment('价格');

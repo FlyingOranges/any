@@ -16,21 +16,37 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderServiceImpl implements OrderService
 {
+    private $OrderModel;
+
+    public function __construct(Order $orderModel)
+    {
+        $this->OrderModel = $orderModel;
+    }
+
     public function index($searche)
     {
-        $OrderModels = new Order();
-
-        return $OrderModels->getIndexLists(Auth::id(), $searche);
+        return $this->OrderModel->getIndexLists(Auth::id(), $searche);
     }
 
     public function createOrder($create)
     {
-        $OrderModels = new Order();
-
         $create['user_id'] = Auth::id();
 
-        return $OrderModels->create($create);
+        return $this->OrderModel->create($create);
     }
 
+    public function findByIdOrder($id)
+    {
+        return $this->OrderModel->getByIdOrder($id);
+    }
 
+    public function updateOrder($id, $merge)
+    {
+        return $this->OrderModel->updateOrder($id, $merge);
+    }
+
+    public function destroyOrder($id)
+    {
+        return $this->OrderModel->destroyOrder($id);
+    }
 }

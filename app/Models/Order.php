@@ -25,4 +25,23 @@ class Order extends Model
         return $data;
     }
 
+    public function getByIdOrder($id)
+    {
+        return $this->where('id', decodeId($id))
+            ->first([
+                'id', 'copyright_figure', 'serial_number', 'software_name',
+                'deliveried_at', 'work_hours', 'price', 'out_at'
+            ]);
+    }
+
+    public function updateOrder($id, $merge)
+    {
+        return $this->where('id', decodeId($id))->update($merge);
+    }
+
+    public function destroyOrder($id)
+    {
+        return $this->where('id', decodeId($id))->delete();
+    }
+
 }

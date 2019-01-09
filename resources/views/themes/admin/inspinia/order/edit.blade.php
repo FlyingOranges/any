@@ -29,27 +29,25 @@
     </style>
 @endsection
 @section('content')
-    @inject('userPresenter','App\Repositories\Presenters\Admin\UserPresenter')
     <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
             <h2>{!! trans('order.title') !!}</h2>
             <ol class="breadcrumb">
                 <li>
-                    <a href="javascript:;">{!! trans('order.title') !!}</a>
+                    <a href="javasctipt:;">{!! trans('home.title') !!}</a>
                 </li>
                 <li>
-                    <a href="{{ route('order.index') }}">{!! trans('order.orderList') !!}</a>
+                    <a href="{{route('order.index')}}">{!! trans('order.title') !!}</a>
                 </li>
                 <li class="active">
-                    <strong>{!! trans('common.create').trans('order.slug') !!}</strong>
+                    <strong>{!!trans('common.edit').trans('order.slug')!!}</strong>
                 </li>
             </ol>
         </div>
         <div class="col-lg-2">
             <div class="title-action">
-                <a class="btn btn-white" href="{{ route('order.index') }}">
-                    <i class="fa fa-reply"></i>
-                    {!! trans('common.cancel') !!}
+                <a class="btn btn-white" href="{{route('order.index')}}">
+                    <i class="fa fa-reply"></i> {!!trans('common.cancel')!!}
                 </a>
             </div>
         </div>
@@ -59,7 +57,7 @@
             <div class="col-lg-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>{!! trans('common.create').trans('order.slug') !!}</h5>
+                        <h5>{!!trans('common.edit').trans('order.slug')!!}</h5>
                         <div class="ibox-tools">
                             <a class="collapse-link">
                                 <i class="fa fa-chevron-up"></i>
@@ -71,14 +69,16 @@
                     </div>
                     <div class="ibox-content">
                         @include('flash::message')
-                        <form method="post" action="{{ route('order.store') }}" class="form-horizontal">
+                        <form method="post" action="{{route('order.update', [encodeId($view->id, 'id')])}}"
+                              class="form-horizontal">
                             {{csrf_field()}}
+                            {{method_field('PUT')}}
                             <div class="form-group{{ $errors->has('copyright_figure') ? ' has-error' : '' }}">
                                 <label class="col-sm-2 control-label">{{trans('order.copyright_figure')}}</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="copyright_figure" value="{{old('copyright_figure')}}"
-                                           placeholder="{{ trans('order.copyright_figure') }}">
-                                    @if ($errors->has('name'))
+                                    <input type="text" class="form-control" name="copyright_figure"
+                                           value="{{old('copyright_figure', $view->copyright_figure)}}" placeholder="{{trans('order.copyright_figure')}}">
+                                    @if ($errors->has('copyright_figure'))
                                         <span class="help-block m-b-none text-danger">{{ $errors->first('copyright_figure') }}</span>
                                     @endif
                                 </div>
@@ -88,8 +88,8 @@
                             <div class="form-group{{ $errors->has('serial_number') ? ' has-error' : '' }}">
                                 <label class="col-sm-2 control-label">{{trans('order.serial_number')}}</label>
                                 <div class="col-sm-10">
-                                    <input type="tel" class="form-control" name="serial_number"
-                                           value="{{old('serial_number')}}" placeholder="{{trans('order.serial_number')}}">
+                                    <input type="text" class="form-control" name="serial_number"
+                                           value="{{old('serial_number', $view->serial_number)}}" placeholder="{{trans('order.serial_number')}}">
                                     @if ($errors->has('serial_number'))
                                         <span class="help-block m-b-none text-danger">{{ $errors->first('serial_number') }}</span>
                                     @endif
@@ -100,8 +100,8 @@
                             <div class="form-group{{ $errors->has('software_name') ? ' has-error' : '' }}">
                                 <label class="col-sm-2 control-label">{{trans('order.software_name')}}</label>
                                 <div class="col-sm-10">
-                                    <input type="tel" class="form-control" name="software_name"
-                                           value="{{old('software_name')}}" placeholder="{{trans('order.software_name')}}">
+                                    <input type="text" class="form-control" name="software_name"
+                                           value="{{old('software_name', $view->software_name)}}" placeholder="{{trans('order.software_name')}}">
                                     @if ($errors->has('software_name'))
                                         <span class="help-block m-b-none text-danger">{{ $errors->first('software_name') }}</span>
                                     @endif
@@ -112,8 +112,8 @@
                             <div class="form-group{{ $errors->has('deliveried_at') ? ' has-error' : '' }}">
                                 <label class="col-sm-2 control-label">{{trans('order.deliveried_at')}}</label>
                                 <div class="col-sm-10">
-                                    <input type="tel" class="form-control" name="deliveried_at"
-                                           value="{{old('deliveried_at')}}" placeholder="{{trans('order.deliveried_at')}}">
+                                    <input type="text" class="form-control" name="deliveried_at"
+                                           value="{{old('deliveried_at', $view->deliveried_at)}}" placeholder="{{trans('order.deliveried_at')}}">
                                     @if ($errors->has('deliveried_at'))
                                         <span class="help-block m-b-none text-danger">{{ $errors->first('deliveried_at') }}</span>
                                     @endif
@@ -124,8 +124,8 @@
                             <div class="form-group{{ $errors->has('work_hours') ? ' has-error' : '' }}">
                                 <label class="col-sm-2 control-label">{{trans('order.work_hours')}}</label>
                                 <div class="col-sm-10">
-                                    <input type="tel" class="form-control" name="work_hours"
-                                           value="{{old('work_hours')}}" placeholder="{{trans('order.work_hours')}}">
+                                    <input type="text" class="form-control" name="work_hours"
+                                           value="{{old('work_hours', $view->work_hours)}}" placeholder="{{trans('order.work_hours')}}">
                                     @if ($errors->has('work_hours'))
                                         <span class="help-block m-b-none text-danger">{{ $errors->first('work_hours') }}</span>
                                     @endif
@@ -136,8 +136,8 @@
                             <div class="form-group{{ $errors->has('price') ? ' has-error' : '' }}">
                                 <label class="col-sm-2 control-label">{{trans('order.price')}}</label>
                                 <div class="col-sm-10">
-                                    <input type="tel" class="form-control" name="price"
-                                           value="{{old('price')}}" placeholder="{{trans('order.price')}}">
+                                    <input type="text" class="form-control" name="price"
+                                           value="{{old('price', $view->price)}}" placeholder="{{trans('order.price')}}">
                                     @if ($errors->has('price'))
                                         <span class="help-block m-b-none text-danger">{{ $errors->first('price') }}</span>
                                     @endif
@@ -148,9 +148,9 @@
                             <div class="form-group{{ $errors->has('out_at') ? ' has-error' : '' }}">
                                 <label class="col-sm-2 control-label">{{trans('order.out_at')}}</label>
                                 <div class="col-sm-10">
-                                    <input type="tel" class="form-control" name="out_at"
-                                           value="{{old('out_at')}}" placeholder="{{trans('order.out_at')}}">
-                                    @if ($errors->has('out_at'))
+                                    <input type="text" class="form-control" name="out_at"
+                                           value="{{old('out_at', $view->out_at)}}" placeholder="{{trans('order.out_at')}}">
+                                    @if ($errors->has('price'))
                                         <span class="help-block m-b-none text-danger">{{ $errors->first('out_at') }}</span>
                                     @endif
                                 </div>
@@ -160,10 +160,11 @@
                             <div class="form-group">
                                 <div class="col-sm-4 col-sm-offset-2">
                                     <a class="btn btn-white"
-                                       href="{{ route('order.index') }}">{!!trans('common.cancel')!!}</a>
-                                    @if(haspermission('orderscontroller.store'))
-                                        <button class="btn btn-primary"
-                                                type="submit">{!! trans('common.create') !!}</button>
+                                       href="{{ route('order.index') }}">{!! trans('common.cancel') !!}</a>
+                                    @if(haspermission('ordercontroller.update'))
+                                        <button class="btn btn-primary" type="submit">
+                                            {!! trans('common.edit') !!}
+                                        </button>
                                     @endif
                                 </div>
                             </div>

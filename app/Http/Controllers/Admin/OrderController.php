@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Order;
 use App\Services\Admin\OrderService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class OrderController extends BaseController
 {
@@ -80,8 +78,9 @@ class OrderController extends BaseController
      */
     public function show($id)
     {
-        dd(Auth::user());
-        dd('OrderController@show');
+        $data = $this->OrderService->findByIdOrder($id);
+
+        return view(getThemeView('order.show'), ['view' => $data]);
     }
 
     /**
@@ -92,7 +91,9 @@ class OrderController extends BaseController
      */
     public function edit($id)
     {
-        //
+        $data = $this->OrderService->findByIdOrder($id);
+
+        return view(getThemeView('order.edit'), ['view' => $data]);
     }
 
     /**
@@ -104,7 +105,26 @@ class OrderController extends BaseController
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'copyright_figure' => 'required',
+            'software_name' => 'required',
+            'deliveried_at' => 'required',
+            'work_hours' => 'required',
+            'price' => 'required'
+        ], [
+            'copyright_figure.required' => '请填写著作人',
+            'software_name.required' => '请填写软件名称',
+            'deliveried_at.required' => '请填写交件日期',
+            'work_hours.required' => '请填写工作日',
+            'price.required' => '请填写价格参数'
+        ]);
+
+        $merge = $request->except(['_method', '_token']);
+
+        $this->OrderService->updateOrder($id, $merge) ?
+            flash('更新成功')->success() : flash("更新失败")->error();
+
+        return back();
     }
 
     /**
@@ -115,6 +135,7 @@ class OrderController extends BaseController
      */
     public function destroy($id)
     {
-        //
+        return $this->OrderService->destroyOrder($id) ?
+            responseJson('删除成功') : responseJson('删除失败', [], 1);
     }
 }

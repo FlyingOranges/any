@@ -88,7 +88,7 @@
                                                 <td>{{ $item->software_name }}</td>
                                                 <td>{{ $item->deliveried_at }}</td>
                                                 <td>{{ $item->work_hours }}</td>
-                                                <td>交件日期</td>
+                                                <td>{{ $item->out_at ? $item->out_at : '暂未出证' }}</td>
                                                 <td>{{ $item->price }}</td>
                                                 <td>
                                                     <a href="{{ route('order.show',['id'=>encodeId($item->id)]) }}"
@@ -100,6 +100,7 @@
                                                         <i class="fa fa-edit"></i>
                                                     </a>
                                                     <a href="javascript:;"
+                                                       delete-url="{{ route('order.destroy',['id'=>encodeId($item->id)]) }}"
                                                        class="btn btn-xs btn-outline btn-danger tooltips destroy_item">
                                                         <i class="fa fa-trash"></i>
                                                     </a>
@@ -138,10 +139,27 @@
             var title = "{{trans('common.deleteTitle').trans('order.slug')}}？";
             layer.confirm(title, {
                 btn: ['{{trans('common.yes')}}', '{{trans('common.no')}}'],
-                icon: 5
+                icon: 3
             }, function (index) {
-                // _item.children('form').submit();
-                layer.close(index);
+                let url = _item.attr('delete-url');
+                $.ajax({
+                    url: url,
+                    data: {'_token': "{{ csrf_token() }}",},
+                    dataType: 'json',
+                    type: 'DELETE',
+                    success: function (e) {
+                        if (e.error_code === 0) {
+                            location.reload(true);
+                            return false;
+                        }
+
+                        layer.alert(e.msg, {
+                            icon: 2
+                        });
+                    }
+                });
+
+
             });
         });
     </script>

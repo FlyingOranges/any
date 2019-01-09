@@ -10,5 +10,6 @@ return [
     'software_name' => '软件名称',
     'deliveried_at' => '交件日期',
     'work_hours' => '工作日',
-    'price' => '价格'
+    'price' => '价格',
+    'out_at' => '出证时间'
 ];

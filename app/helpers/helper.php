@@ -162,3 +162,17 @@ if (!function_exists('myLog')) {
         file_put_contents('myLog.txt', date('Y-m-d H:i:s', time()) . '  myLog:  ' . $val . "\r\n", FILE_APPEND);
     }
 }
+
+if (!function_exists('responseJson')) {
+
+    function responseJson($msg = 'sucess', $data = [], $error_code = 0)
+    {
+        $result = (object)[
+            'error_code' => $error_code,
+            'data' => $data,
+            'msg' => $msg
+        ];
+
+        return response()->json($result);
+    }
+}
