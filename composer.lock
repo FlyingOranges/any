@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "9d8b21a0e03b634afc0a8edb7b53a473",
+    "content-hash": "c6804a55961f6cee4258a7e7a0456bde",
     "packages": [
         {
             "name": "barryvdh/laravel-translation-manager",
