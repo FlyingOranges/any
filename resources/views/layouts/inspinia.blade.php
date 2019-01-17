@@ -52,7 +52,7 @@
                 </strong>
             </div>
             <div>
-                <strong>Copyright</strong> 通用后台 &copy; http://www.xxx.com
+                <strong>Copyright</strong> {{ trans('common.common_botton') }} &copy; {{ trans('common.common_url') }}
             </div>
         </div>
 
