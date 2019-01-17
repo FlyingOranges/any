@@ -22,8 +22,8 @@
     {{ csrf_field() }}
     <dl class="admin_login">
         <dt>
-            <strong>{{ config('app.name') }} -- {{ trans('common.common_botton') }}</strong>
-            {{--<em>Management System</em>--}}
+            <strong>{{  trans('common.common_botton') }}</strong>
+            <em>{{ config('app.name') }}</em>
         </dt>
         <dd class="user_icon">
             <input type="text" placeholder="账号" name="{{config('admin.global.username')}}" class="login_txtbx"
