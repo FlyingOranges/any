@@ -1,6 +1,11 @@
 @extends('layouts.'.getTheme())
 @section('css')
     <link href="{{ asset(getThemeAssets('dataTables/datatables.min.css', true)) }}" rel="stylesheet">
+    <style type="text/css">
+        .import-file {
+            display: none !important;
+        }
+    </style>
 @endsection
 @section('content')
     <div class="row wrapper border-bottom white-bg page-heading">
@@ -59,6 +64,19 @@
                                             <button class="btn btn-sm btn-primary">确定</button>
                                         </div>
                                     </form>
+                                </div>
+                                <div class="col-sm-6">
+                                    <form action="{{ route('order.import.file') }}" method="post" enctype="multipart/form-data"
+                                          class="import-form col-sm-3 import-form">
+
+                                        <input type="file" name="import_file" class="import-file"/>
+                                        {{ csrf_field() }}
+
+                                        <button class="btn btn-sm btn-success import-btn" type="button">
+                                            {!! trans('order.import') !!}{!! trans('order.slug') !!}
+                                        </button>
+                                    </form>
+                                    <button class="btn btn-sm btn-success">{!! trans('order.export') !!}{!! trans('order.slug') !!}</button>
                                 </div>
                             </div>
                             <div class="row">
@@ -152,15 +170,23 @@
                             location.reload(true);
                             return false;
                         }
-
                         layer.alert(e.msg, {
                             icon: 2
                         });
                     }
                 });
-
-
             });
+        });
+
+        $(document).on('click', '.import-btn', function () {
+            $('.import-file').click();
+        });
+
+        $(document).on('change', '.import-file', function () {
+            console.log('发生变化了');
+
+            $('.import-form').submit();
+
         });
     </script>
 @endsection

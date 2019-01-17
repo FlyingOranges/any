@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Services\Admin\OrderService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class OrderController extends BaseController
 {
@@ -137,5 +139,59 @@ class OrderController extends BaseController
     {
         return $this->OrderService->destroyOrder($id) ?
             responseJson('删除成功') : responseJson('删除失败', [], 1);
+    }
+
+    public function import(Request $request)
+    {
+        $file = $request->file('import_file');
+
+        $entension = $file->getClientOriginalExtension();
+        if (!in_array($entension, ['xlsx', 'xls'])) {
+            flash()->error('上传文件格式不正确,只接收xlsx,xls格式文件');
+            return back();
+        }
+
+        $files = uploadFile($file);
+        $data = $this->importFile($files);
+
+        $uid = Auth::id();
+        $create = [];
+        if (is_array($data)) {
+            foreach ($data as $key => &$item) {
+                $create[$key] = [
+                    'copyright_figure' => $item[0], 'serial_number' => $item[1],
+                    'software_name' => $item[2], 'deliveried_at' => $item[3],
+                    'out_at' => $item[4], 'work_hours' => $item[5],
+                    'price' => $item[6], 'user_id' => $uid, 'created_at' => date('Y-m-d', time()),
+                    'updated_at' => date('Y-m-d', time())
+                ];
+            }
+        }
+
+        //无论是否导入成功,均删除实体文件(excel)
+        $file_path = public_path(iconv('UTF-8', 'GBK', $files));
+        unlink($file_path);
+
+        $this->OrderService->createBatchOrder($create) ? flash()->success('导入成功') : flash()->error('导入失败');
+
+        return back();
+    }
+
+    private function importFile(string $path)
+    {
+        $filePath = '/public/' . iconv('UTF-8', 'GBK', $path);
+
+        $data = Excel::load($filePath)->toArray();
+
+        foreach ($data as $key => &$item) {
+            $item = array_where($item, function ($value, $keys) {
+                return $keys < 7;
+            });
+            if (!$item[0]) {
+                unset($data[$key]);
+            }
+        }
+
+        return $data;
     }
 }

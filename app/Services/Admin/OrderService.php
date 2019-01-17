@@ -13,4 +13,6 @@ interface OrderService
     public function updateOrder($id, $merge);
 
     public function destroyOrder($id);
+
+    public function createBatchOrder($create);
 }

@@ -13,3 +13,4 @@ yarn-error.log
 /public/myLog.txt
 /public/*.xlsx
 /public/*.xls
+/public/uploads/file

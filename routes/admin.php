@@ -34,6 +34,7 @@ Route::group([], function ($router) {
 
             // 账单
             $router->resource('order', 'OrderController');
+            $router->post('order/import', 'OrderController@import')->name('order.import.file');
         });
 
     });

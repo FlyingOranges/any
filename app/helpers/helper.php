@@ -176,3 +176,70 @@ if (!function_exists('responseJson')) {
         return response()->json($result);
     }
 }
+
+if (!function_exists('uploadImage')) {
+
+    /**
+     * Tag
+     *
+     * Users Flying Oranges
+     * CreateTime 2019/1/16
+     * @param \Illuminate\Http\UploadedFile|array|null $file
+     * @return string
+     */
+    function uploadImage($file)
+    {
+        $url_path = 'uploads/cover';
+        $rule = ['jpg', 'png', 'gif'];
+
+        if ($file->isValid()) {
+            $clientName = $file->getClientOriginalName();
+            $tmpName = $file->getFileName();
+            $realPath = $file->getRealPath();
+            $entension = $file->getClientOriginalExtension();
+
+            if (!in_array($entension, $rule)) {
+                return '图片格式为jpg,png,gif';
+            }
+
+            $newName = md5(date("Y-m-d H:i:s") . $clientName) . "." . $entension;
+            $file->move($url_path, $newName);
+
+            $namePath = $url_path . '/' . $newName;
+
+            return $namePath;
+        }
+
+    }
+}
+
+if (!function_exists('uploadFile')) {
+
+    /**
+     * Tag
+     *
+     * Users Flying Oranges
+     * CreateTime 2019/1/16
+     * @param \Illuminate\Http\UploadedFile|array|null $file
+     * @return string
+     */
+    function uploadFile($file)
+    {
+        $url_path = 'uploads/file';
+
+        if ($file->isValid()) {
+            $clientName = $file->getClientOriginalName();
+            $tmpName = $file->getFileName();
+            $realPath = $file->getRealPath();
+            $entension = $file->getClientOriginalExtension();
+
+            $newName = md5(date("Y-m-d H:i:s") . $clientName) . "." . $entension;
+            $file->move($url_path, $newName);
+
+            $namePath = $url_path . '/' . $newName;
+
+            return $namePath;
+        }
+
+    }
+}

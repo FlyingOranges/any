@@ -20,7 +20,7 @@ class Order extends Model
             $query->where('user_id', $id);
         })->when($search, function ($query) use ($search) {
             $query->where('software_name', 'like', "%{$search}%");
-        })->paginate(15);
+        })->orderBy('created_at', 'desc')->paginate(15);
 
         return $data;
     }
@@ -44,4 +44,8 @@ class Order extends Model
         return $this->where('id', decodeId($id))->delete();
     }
 
+    public function batchCreate($create)
+    {
+        return $this->insert($create);
+    }
 }

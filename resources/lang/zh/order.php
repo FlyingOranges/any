@@ -4,6 +4,8 @@ return [
     'title' => '账单管理',
     'orderList' => '账单列表',
     'slug' => '账单',
+    'import' => '导入',
+    'export' => '导出',
 
     'copyright_figure' => '著作权人',
     'serial_number' => '流水号',

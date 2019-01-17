@@ -49,4 +49,11 @@ class OrderServiceImpl implements OrderService
     {
         return $this->OrderModel->destroyOrder($id);
     }
+
+    public function createBatchOrder($create)
+    {
+        return $this->OrderModel->batchCreate($create);
+    }
+
+
 }
