@@ -57,7 +57,8 @@
                                         <div class="dataTables_length" id="dataTableBuilder_length">
                                             <label>
                                                 搜索:
-                                                <input type="search" class="form-control input-sm" name="search"
+                                                <input type="search" class="form-control input-sm search-input"
+                                                       name="search"
                                                        aria-controls="dataTableBuilder" value="{{ $search or '' }}">
                                             </label>
 
@@ -66,7 +67,8 @@
                                     </form>
                                 </div>
                                 <div class="col-sm-6">
-                                    <form action="{{ route('order.import.file') }}" method="post" enctype="multipart/form-data"
+                                    <form action="{{ route('order.import.file') }}" method="post"
+                                          enctype="multipart/form-data"
                                           class="import-form col-sm-3 import-form">
 
                                         <input type="file" name="import_file" class="import-file"/>
@@ -76,7 +78,13 @@
                                             {!! trans('order.import') !!}{!! trans('order.slug') !!}
                                         </button>
                                     </form>
-                                    <button class="btn btn-sm btn-success">{!! trans('order.export') !!}{!! trans('order.slug') !!}</button>
+                                    <form action="{{ route('order.export.file') }}" method="post">
+                                        <input type="hidden" name="serch" class="input-serche-hidden">
+                                        {{ csrf_field() }}
+                                        <button class="btn btn-sm btn-success" type="submit">
+                                            {!! trans('order.export') !!}{!! trans('order.slug') !!}
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                             <div class="row">
@@ -183,10 +191,11 @@
         });
 
         $(document).on('change', '.import-file', function () {
-            console.log('发生变化了');
-
             $('.import-form').submit();
+        });
 
+        $(document).on('change', '.search-input', function () {
+            $('.input-serche-hidden').val($(this).val());
         });
     </script>
 @endsection

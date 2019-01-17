@@ -194,4 +194,24 @@ class OrderController extends BaseController
 
         return $data;
     }
+
+    public function export(Request $request)
+    {
+        $search = $request->get('search', '');
+        $result = $this->OrderService->exportOrder($search);
+
+        foreach ($result as &$item) {
+            $item = array_values($item);
+        }
+
+        array_unshift($result,
+            ['著作权人', '流水号', '软件名称', '交件日期', '出证日期', '工作日', '价格', '编写人']);
+
+        Excel::create(date('Y-m-d H:i:s') . '账单', function ($excel) use ($result) {
+
+            $excel->sheet('score', function ($sheet) use ($result) {
+                $sheet->rows($result);
+            });
+        })->export('xlsx');
+    }
 }

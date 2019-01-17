@@ -55,5 +55,10 @@ class OrderServiceImpl implements OrderService
         return $this->OrderModel->batchCreate($create);
     }
 
+    public function exportOrder($search)
+    {
+        return $this->OrderModel->getExportLists(Auth::id(), $search)->toArray();
+    }
+
 
 }

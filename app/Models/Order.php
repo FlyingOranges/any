@@ -48,4 +48,24 @@ class Order extends Model
     {
         return $this->insert($create);
     }
+
+    public function getExportLists($id, $search)
+    {
+        $data = $this
+            ->leftJoin('users', 'users.id', '=', 'order.user_id')
+            ->when($id != 1, function ($query) use ($id) {
+                $query->where('order.user_id', $id);
+            })
+            ->when($search, function ($query) use ($search) {
+                $query->where('order.software_name', 'like', "%{$search}%");
+            })
+            ->orderBy('order.created_at', 'desc')
+            ->select([
+                'order.copyright_figure', 'order.serial_number', 'order.software_name',
+                'order.deliveried_at', 'order.out_at', 'order.work_hours', 'order.price', 'users.name'
+            ])
+            ->get();
+
+        return $data;
+    }
 }

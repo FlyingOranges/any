@@ -15,4 +15,6 @@ interface OrderService
     public function destroyOrder($id);
 
     public function createBatchOrder($create);
+
+    public function exportOrder($search);
 }
