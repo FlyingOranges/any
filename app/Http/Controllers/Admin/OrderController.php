@@ -205,7 +205,7 @@ class OrderController extends BaseController
         }
 
         array_unshift($result,
-            ['著作权人', '流水号', '软件名称', '交件日期', '出证日期', '工作日', '价格', '编写人']);
+            ['著作权人', '流水号', '软件名称', '交件日期', '出证日期', '工作日', '价格', '工作者']);
 
         Excel::create(date('Y-m-d H:i:s') . '账单', function ($excel) use ($result) {
 

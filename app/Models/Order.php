@@ -16,11 +16,18 @@ class Order extends Model
 
     public function getIndexLists($id, $search)
     {
-        $data = $this->when($id != 1, function ($query) use ($id) {
-            $query->where('user_id', $id);
-        })->when($search, function ($query) use ($search) {
-            $query->where('software_name', 'like', "%{$search}%");
-        })->orderBy('created_at', 'desc')->paginate(15);
+        $data = $this
+            ->leftJoin('users', 'users.id', '=', 'order.user_id')
+            ->when($id != 1, function ($query) use ($id) {
+                $query->where('order.user_id', $id);
+            })->when($search, function ($query) use ($search) {
+                $query->where('order.software_name', 'like', "%{$search}%");
+            })
+            ->orderBy('order.created_at', 'desc')
+            ->select([
+                'order.id', 'order.copyright_figure', 'order.serial_number', 'order.software_name',
+                'order.deliveried_at', 'order.out_at', 'order.work_hours', 'order.price', 'users.name'
+            ])->paginate(15);
 
         return $data;
     }

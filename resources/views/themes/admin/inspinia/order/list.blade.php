@@ -96,6 +96,7 @@
                                             <th>序号</th>
                                             <th>著作权人</th>
                                             <th>流水号</th>
+                                            <th>工作者</th>
                                             <th>软件名称</th>
                                             <th>交件日期</th>
                                             <th>工作日</th>
@@ -111,6 +112,9 @@
                                                 <td>{{ $item->id }}</td>
                                                 <td>{{ $item->copyright_figure }}</td>
                                                 <td>{{ $item->serial_number }}</td>
+                                                <td style="color: blue;">
+                                                    {{ $item->name }}
+                                                </td>
                                                 <td>{{ $item->software_name }}</td>
                                                 <td>{{ $item->deliveried_at }}</td>
                                                 <td>{{ $item->work_hours }}</td>
