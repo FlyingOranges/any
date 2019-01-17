@@ -22,7 +22,7 @@
     {{ csrf_field() }}
     <dl class="admin_login">
         <dt>
-            <strong>{{ config('app.name') }} -- 后台管理系统</strong>
+            <strong>{{ config('app.name') }} -- {{ trans('common.common_botton') }}</strong>
             {{--<em>Management System</em>--}}
         </dt>
         <dd class="user_icon">
